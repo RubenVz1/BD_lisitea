@@ -26,10 +26,10 @@ CREATE TABLE `tbl_actividades` (
   `PK_id_actividades` int(11) NOT NULL,
   `VCH_campo_a` varchar(3500) NOT NULL,
   `BLB_campo_b` blob NOT NULL,
-  `FK_id_cuerpo` int(11) NOT NULL,
+  `FK_id_seccion_c` int(11) NOT NULL,
   PRIMARY KEY (`PK_id_actividades`),
-  KEY `FK_id_cuerpo_idx` (`FK_id_cuerpo`),
-  CONSTRAINT `FK_id_cuerpo` FOREIGN KEY (`FK_id_cuerpo`) REFERENCES `tbl_cuerpo` (`pk_id_cuerpo`)
+  KEY `FK_id_seccion_c_idx` (`FK_id_seccion_c`),
+  CONSTRAINT `FK_id_seccion_c` FOREIGN KEY (`FK_id_seccion_c`) REFERENCES `tbl_planeacion_estrategica` (`pk_id_planeacion_estrategica`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -308,28 +308,6 @@ LOCK TABLES `tbl_cont_especifico` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tbl_cuerpo`
---
-
-DROP TABLE IF EXISTS `tbl_cuerpo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `tbl_cuerpo` (
-  `PK_id_cuerpo` int(11) NOT NULL,
-  PRIMARY KEY (`PK_id_cuerpo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tbl_cuerpo`
---
-
-LOCK TABLES `tbl_cuerpo` WRITE;
-/*!40000 ALTER TABLE `tbl_cuerpo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_cuerpo` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `tbl_eje`
 --
 
@@ -460,19 +438,20 @@ DROP TABLE IF EXISTS `tbl_planeacion_estrategica`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_planeacion_estrategica` (
   `PK_id_planeacion_estrategica` int(11) NOT NULL,
+  `FK_id_plantel` int(11) NOT NULL,
+  `FK_id_usuario` int(11) NOT NULL,
   `FK_id_seccion_a` int(11) NOT NULL,
   `FK_id_seccion_b` int(11) NOT NULL,
-  `FK_id_seccion_c` int(11) NOT NULL,
-  `FK_id_seccion_f` int(11) NOT NULL,
+  `VCH_realizo` varchar(100) NOT NULL,
   PRIMARY KEY (`PK_id_planeacion_estrategica`),
   KEY `FK_id_seleccion_a_idx` (`FK_id_seccion_a`),
   KEY `FK_id_seleccion_b_idx` (`FK_id_seccion_b`),
-  KEY `FK_id_seleccion_c_idx` (`FK_id_seccion_c`),
-  KEY `FK_id_seccion_f_idx` (`FK_id_seccion_f`),
+  KEY `FK_id_plantel_idx` (`FK_id_plantel`),
+  KEY `FK_id_usuario_idx` (`FK_id_usuario`),
   CONSTRAINT `FK_id_seccion_a` FOREIGN KEY (`FK_id_seccion_a`) REFERENCES `tbl_seccion_a` (`pk_id_seccion_a`),
   CONSTRAINT `FK_id_seccion_b` FOREIGN KEY (`FK_id_seccion_b`) REFERENCES `tbl_seccion_b` (`pk_id_seccion_b`),
-  CONSTRAINT `FK_id_seccion_c` FOREIGN KEY (`FK_id_seccion_c`) REFERENCES `tbl_seccion_c` (`pk_id_seccion_c`),
-  CONSTRAINT `FK_id_seccion_f` FOREIGN KEY (`FK_id_seccion_f`) REFERENCES `tbl_seccion_f` (`pk_id_seccion_f`)
+  CONSTRAINT `FK_id_plantel` FOREIGN KEY (`FK_id_plantel`) REFERENCES `tbl_plantel` (`pk_id_plantel`),
+  CONSTRAINT `FK_id_usuario` FOREIGN KEY (`FK_id_usuario`) REFERENCES `tbl_usuario` (`pk_id_usuario`),
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -520,7 +499,6 @@ DROP TABLE IF EXISTS `tbl_seccion_a`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_seccion_a` (
   `PK_id_seccion_a` int(11) NOT NULL,
-  `FK_id_usuario` int(11) NOT NULL,
   `FK_id_campo_disciplinar` int(11) NOT NULL,
   `VCH_semestre` varchar(30) NOT NULL,
   `VCH_num_parcial` varchar(30) NOT NULL,
@@ -528,10 +506,8 @@ CREATE TABLE `tbl_seccion_a` (
   `VCH_titulo_planeacion` varchar(50) NOT NULL,
   `INT_porcentaje` int(11) NOT NULL,
   PRIMARY KEY (`PK_id_seccion_a`),
-  KEY `FK_id_usuario_idx` (`FK_id_usuario`),
   KEY `FK_id_campo_disciplinar_idx` (`FK_id_campo_disciplinar`),
-  CONSTRAINT `FK_id_campo_disciplinar` FOREIGN KEY (`FK_id_campo_disciplinar`) REFERENCES `tbl_campo_disciplinar` (`pk_id_campo_disciplinar`),
-  CONSTRAINT `FK_id_usuario` FOREIGN KEY (`FK_id_usuario`) REFERENCES `tbl_usuario` (`pk_id_usuario`)
+  CONSTRAINT `FK_id_campo_disciplinar` FOREIGN KEY (`FK_id_campo_disciplinar`) REFERENCES `tbl_campo_disciplinar` (`pk_id_campo_disciplinar`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -608,7 +584,12 @@ DROP TABLE IF EXISTS `tbl_seccion_c`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_seccion_c` (
   `PK_id_seccion_c` int(11) NOT NULL,
-  PRIMARY KEY (`PK_id_seccion_c`)
+  `FK_id_planeacion int(11) NOT NULL,
+  `VCH_tipo varchar(11) NOT NULL,
+  `INT_posicion int(11) NOT NULL,
+  PRIMARY KEY (`PK_id_seccion_c`),
+  KEY `FK_id_planeacion_idx` (`FK_id_planeacion`),
+  CONSTRAINT `FK_id_planeacion` FOREIGN KEY (`FK_id_planeacion`) REFERENCES `tbl_planeacion_estrategica` (`PK_id_planeacion_estrategica`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -629,13 +610,14 @@ DROP TABLE IF EXISTS `tbl_seccion_competenciad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_seccion_competenciad` (
-  `PFK_id_seccion_b` int(11) NOT NULL,
-  `PFK_id_competencia_disciplinar` int(11) NOT NULL,
-  PRIMARY KEY (`PFK_id_seccion_b`,`PFK_id_competencia_disciplinar`),
-  KEY `PFK_id_seccion_b_4_idx` (`PFK_id_seccion_b`),
-  KEY `PFK_id_competencia_disciplinar_idx` (`PFK_id_competencia_disciplinar`),
-  CONSTRAINT `PFK_id_competencia_disciplinar` FOREIGN KEY (`PFK_id_competencia_disciplinar`) REFERENCES `tbl_competencia_disciplinar` (`pk_id_competencia_disciplinar`),
-  CONSTRAINT `PFK_id_seccion_b_4` FOREIGN KEY (`PFK_id_seccion_b`) REFERENCES `tbl_seccion_b` (`pk_id_seccion_b`)
+  `PK_id_seccion_competenciad` int(11) NOT NULL,
+  `FK_id_seccion_b` int(11) NOT NULL,
+  `FK_id_competencia_disciplinar` int(11) NOT NULL,
+  PRIMARY KEY (`PK_id_competenciad`),
+  KEY `FK_id_seccion_b_idx` (`FK_id_seccion_b`),
+  KEY `FK_id_competencia_disciplinar_idx` (`FK_id_competencia_disciplinar`),
+  CONSTRAINT `FK_id_competencia_disciplinar` FOREIGN KEY (`FK_id_competencia_disciplinar`) REFERENCES `tbl_competencia_disciplinar` (`pk_id_competencia_disciplinar`),
+  CONSTRAINT `FK_id_seccion_b_4` FOREIGN KEY (`FK_id_seccion_b`) REFERENCES `tbl_seccion_b` (`pk_id_seccion_b`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -656,15 +638,16 @@ DROP TABLE IF EXISTS `tbl_seccion_competenciag`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_seccion_competenciag` (
-  `PFK_id_seccion_b` int(11) NOT NULL,
-  `PFK_id_competencia_generica` int(11) NOT NULL,
-  `PFK_id_competencia_generica_a` int(11) NOT NULL,
-  PRIMARY KEY (`PFK_id_seccion_b`,`PFK_id_competencia_generica`,`PFK_id_competencia_generica_a`),
-  KEY `PFK_id_competencia_generica_a_idx` (`PFK_id_competencia_generica_a`),
-  KEY `PFK_id_competencia_generica_idx` (`PFK_id_competencia_generica`),
-  CONSTRAINT `PFK_id_competencia_generica` FOREIGN KEY (`PFK_id_competencia_generica`) REFERENCES `tbl_competencia_generica` (`pk_id_competencia_generica`),
-  CONSTRAINT `PFK_id_competencia_generica_a` FOREIGN KEY (`PFK_id_competencia_generica_a`) REFERENCES `tbl_competencia_generica_a` (`pk_id_competencia_generica_a`),
-  CONSTRAINT `PFK_id_seccion_b_7` FOREIGN KEY (`PFK_id_seccion_b`) REFERENCES `tbl_seccion_b` (`pk_id_seccion_b`)
+  `PK_id_seccion_competenciag` int(11) NOT NULL,
+  `FK_id_seccion_b` int(11) NOT NULL,
+  `FK_id_competencia_generica` int(11) NOT NULL,
+  `FK_id_competencia_generica_a` int(11) NOT NULL,
+  PRIMARY KEY (`PK_id_seccion_competenciag`),
+  KEY `FK_id_competencia_generica_a_idx` (`FK_id_competencia_generica_a`),
+  KEY `FK_id_competencia_generica_idx` (`FK_id_competencia_generica`),
+  CONSTRAINT `FK_id_competencia_generica` FOREIGN KEY (`FK_id_competencia_generica`) REFERENCES `tbl_competencia_generica` (`pk_id_competencia_generica`),
+  CONSTRAINT `FK_id_competencia_generica_a` FOREIGN KEY (`FK_id_competencia_generica_a`) REFERENCES `tbl_competencia_generica_a` (`pk_id_competencia_generica_a`),
+  CONSTRAINT `FK_id_seccion_b_7` FOREIGN KEY (`FK_id_seccion_b`) REFERENCES `tbl_seccion_b` (`pk_id_seccion_b`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -755,32 +738,6 @@ LOCK TABLES `tbl_seccion_contenido` WRITE;
 /*!40000 ALTER TABLE `tbl_seccion_contenido` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `tbl_seccion_cuerpo`
---
-
-DROP TABLE IF EXISTS `tbl_seccion_cuerpo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `tbl_seccion_cuerpo` (
-  `PFK_id_seccion_c` int(11) NOT NULL,
-  `PFK_id_cuerpo` int(11) NOT NULL,
-  `INT_tipo` int(11) NOT NULL,
-  PRIMARY KEY (`PFK_id_seccion_c`,`PFK_id_cuerpo`),
-  KEY `PFK_id_cuerpo_idx` (`PFK_id_cuerpo`),
-  CONSTRAINT `PFK_id_cuerpo` FOREIGN KEY (`PFK_id_cuerpo`) REFERENCES `tbl_cuerpo` (`pk_id_cuerpo`),
-  CONSTRAINT `PFK_id_seccion_c` FOREIGN KEY (`PFK_id_seccion_c`) REFERENCES `tbl_seccion_c` (`pk_id_seccion_c`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tbl_seccion_cuerpo`
---
-
-LOCK TABLES `tbl_seccion_cuerpo` WRITE;
-/*!40000 ALTER TABLE `tbl_seccion_cuerpo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_seccion_cuerpo` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `tbl_seccion_d`
@@ -890,28 +847,6 @@ LOCK TABLES `tbl_seccion_especialidad` WRITE;
 /*!40000 ALTER TABLE `tbl_seccion_especialidad` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `tbl_seccion_f`
---
-
-DROP TABLE IF EXISTS `tbl_seccion_f`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `tbl_seccion_f` (
-  `PK_id_seccion_f` int(11) NOT NULL,
-  `VCH_realizo` varchar(100) NOT NULL,
-  PRIMARY KEY (`PK_id_seccion_f`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tbl_seccion_f`
---
-
-LOCK TABLES `tbl_seccion_f` WRITE;
-/*!40000 ALTER TABLE `tbl_seccion_f` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_seccion_f` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `tbl_seccion_habilidad`
@@ -947,11 +882,12 @@ DROP TABLE IF EXISTS `tbl_seccion_nivel`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_seccion_nivel` (
-  `PFK_id_cuerpo` int(11) NOT NULL,
+  `PFK_id_seccion_c` int(11) NOT NULL,
   `PFK_id_nivel_taxonomico` int(11) NOT NULL,
-  PRIMARY KEY (`PFK_id_cuerpo`,`PFK_id_nivel_taxonomico`),
+  PRIMARY KEY (`PFK_id_seccion_c`,`PFK_id_nivel_taxonomico`),
+  KEY `PFK_id_seccion_c_idx` (`PFK_id_seccion_c`),
   KEY `PFK_id_nivel_taxonomico_idx` (`PFK_id_nivel_taxonomico`),
-  CONSTRAINT `PFK_id_cuerpo_1` FOREIGN KEY (`PFK_id_cuerpo`) REFERENCES `tbl_cuerpo` (`pk_id_cuerpo`),
+  CONSTRAINT `PFK_id_seccion_c` FOREIGN KEY (`PFK_id_seccion_c`) REFERENCES `tbl_planeacion_estrategica` (`pk_id_planeacion_estrategica`),
   CONSTRAINT `PFK_id_nivel_taxonomico` FOREIGN KEY (`PFK_id_nivel_taxonomico`) REFERENCES `tbl_nivel_taxonomico` (`pk_id_nivel_taxonomico`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1065,11 +1001,91 @@ CREATE TABLE `tbl_usuario` (
 -- Dumping data for table `tbl_usuario`
 --
 
+
 LOCK TABLES `tbl_usuario` WRITE;
 /*!40000 ALTER TABLE `tbl_usuario` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+--
+-- Table structure for table `tbl_plantel`
+--
+
+DROP TABLE IF EXISTS `tbl_plantel`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `tbl_plantel` (
+  `PK_id_plantel` int(11) NOT NULL,
+  `VCH_institucion varchar(20) NOT NULL,
+  `VCH_plantel varchar(20) NOT NULL,
+  `VCH_CCT varchar(20) NOT NULL,
+  PRIMARY KEY (`PK_id_plantel`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_plantel`
+--
+
+LOCK TABLES `tbl_plantel` WRITE;
+/*!40000 ALTER TABLE `tbl_plantel` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_plantel` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_seccion_c_competencia_g`
+--
+
+DROP TABLE IF EXISTS `tbl_seccion_c_competencia_g`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `tbl_seccion_c_competencia_g` (
+  `PFK_id_seccion_c` int(11) NOT NULL,
+  `PFK_id_seccion_competenciag int(11) NOT NULL,
+  PRIMARY KEY (`PFK_id_seccion_c`,`PFK_id_seccion_competenciag`),
+  KEY `PFK_id_seccion_c_idx` (`PFK_id_seccion_c`),
+  KEY `PFK_id_seccion_competenciag_idx` (`PFK_id_seccion_competenciag),
+  CONSTRAINT `PFK_id_seccion_c` FOREIGN KEY (`PFK_id_seccion_c`) REFERENCES `tbl_seccion_c` (`pk_id_seccion_c`),
+  CONSTRAINT `PFK_id_seccion_competenciag` FOREIGN KEY (`PFK_id_seccion_competenciag`) REFERENCES `tbl_seccion_competenciag` (`PK_id_seccion_competenciag`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_seccion_c_competencia_g`
+--
+
+LOCK TABLES `tbl_seccion_c_competencia_g` WRITE;
+/*!40000 ALTER TABLE `tbl_seccion_c_competencia_g` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_seccion_c_competencia_g` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_seccion_c_competencia_d`
+--
+
+DROP TABLE IF EXISTS `tbl_seccion_c_competencia_d`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `tbl_seccion_c_competencia_d` (
+  `PFK_id_seccion_c` int(11) NOT NULL,
+  `PFK_id_seccion_competenciad int(11) NOT NULL,
+  PRIMARY KEY (`PFK_id_seccion_c`,`PFK_id_seccion_competenciad`),
+  KEY `PFK_id_seccion_c_idx` (`PFK_id_seccion_c`),
+  KEY `PFK_id_seccion_d_idx` (`PFK_id_seccion_competenciad),
+  CONSTRAINT `PFK_id_seccion_c` FOREIGN KEY (`PFK_id_seccion_c`) REFERENCES `tbl_seccion_c` (`pk_id_seccion_c`),
+  CONSTRAINT `PFK_id_seccion_competenciad` FOREIGN KEY (`PFK_id_seccion_competenciad`) REFERENCES `tbl_seccion_competenciad` (`PK_id_seccion_competenciad`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_seccion_c_competencia_d`
+--
+
+LOCK TABLES `tbl_seccion_c_competencia_d` WRITE;
+/*!40000 ALTER TABLE `tbl_seccion_c_competencia_d` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_seccion_c_competencia_d` ENABLE KEYS */;
+UNLOCK TABLES;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
