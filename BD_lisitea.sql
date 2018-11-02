@@ -22,29 +22,26 @@ USE base_de_datos;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `tbl_actividades`
+-- Table structure for table `tbl_actividad`
 --
 
-DROP TABLE IF EXISTS `tbl_actividades`;
+DROP TABLE IF EXISTS `tbl_actividad`;
 SET character_set_client = utf8mb4;
-CREATE TABLE `tbl_actividades` (
-  `PK_id_actividades` int(11) NOT NULL,
-  `FK_id_actividades_aprend` int(11) NOT NULL,
+CREATE TABLE `tbl_actividad` (
+  `PK_id_actividad` int(11) NOT NULL,
   `VCH_campo_a` varchar(3500) NOT NULL,
   `BLB_campo_b` blob NOT NULL,
-  PRIMARY KEY (`PK_id_actividades`),
-  KEY `FK_id_actividades_aprend2_idx` (`FK_id_actividades_aprend`),
-  CONSTRAINT `FK_id_actividades_aprend2` FOREIGN KEY (`FK_id_actividades_aprend`) REFERENCES `tbl_actividades_apren` (`pk_id_actividades_aprend`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`PK_id_actividad`)
 );
 
 
 --
--- Dumping data for table `tbl_actividades`
+-- Dumping data for table `tbl_actividad`
 --
 
-LOCK TABLES `tbl_actividades` WRITE;
-/*!40000 ALTER TABLE `tbl_actividades` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_actividades` ENABLE KEYS */;
+LOCK TABLES `tbl_actividad` WRITE;
+/*!40000 ALTER TABLE `tbl_actividad` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_actividad` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -57,6 +54,7 @@ SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_actividades_aprend` (
   `PK_id_actividades_aprend` int(11) NOT NULL,
   `FK_id_planeacion` int(11) NOT NULL,
+  `FK_id_actividad` int(11) NOT NULL,
   `FK_id_nivel_taxonomico` int(11) NOT NULL,
   `VCH_tipo` int(11) NOT NULL,
   `TINT_posicion` tinyint(1) NOT NULL,
@@ -66,8 +64,10 @@ CREATE TABLE `tbl_actividades_aprend` (
   `VCH_indicador` varchar(200) NOT NULL,
   PRIMARY KEY (`PK_id_actividades_aprend`),
   KEY `FK_id_planeacion_idx` (`FK_id_planeacion`),
+  KEY `FK_id_actividad_idx` (`FK_id_actividad`),
   KEY `FK_id_nivel_taxonomico_idx` (`FK_id_nivel_taxonomico`),
   CONSTRAINT `FK_id_nivel_taxonomico` FOREIGN KEY (`FK_id_nivel_taxonomico`) REFERENCES `tbl_nivel_taxonomico` (`pk_id_nivel_taxonomico`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_id_actividad` FOREIGN KEY (`FK_id_actividad`) REFERENCES `tbl_actividad` (`pk_id_actividad`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_id_planeacion` FOREIGN KEY (`FK_id_planeacion`) REFERENCES `tbl_planeacion` (`PK_id_planeacion`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
