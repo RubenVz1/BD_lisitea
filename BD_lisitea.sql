@@ -28,7 +28,7 @@ USE base_de_datos;
 DROP TABLE IF EXISTS `tbl_actividad`;
 SET character_set_client = utf8mb4;
 CREATE TABLE `tbl_actividad` (
-  `PK_id_actividad` int(11) NOT NULL,
+  `PK_id_actividad` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_campo_a` varchar(3500) NOT NULL,
   `BLB_campo_b` blob NOT NULL,
   PRIMARY KEY (`PK_id_actividad`)
@@ -45,14 +45,14 @@ LOCK TABLES `tbl_actividad` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tbl_actividades_aprendizaje`
+-- Table structure for table `tbl_actividades_aprend`
 --
 
 DROP TABLE IF EXISTS `tbl_actividades_aprend`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_actividades_aprend` (
-  `PK_id_actividades_aprend` int(11) NOT NULL,
+  `PK_id_actividades_aprend` int(11) NOT NULL AUTO_INCREMENT,
   `FK_id_planeacion` int(11) NOT NULL,
   `FK_id_actividad` int(11) NOT NULL,
   `FK_id_nivel_taxonomico` int(11) NOT NULL,
@@ -116,7 +116,7 @@ DROP TABLE IF EXISTS `tbl_aprendizaje_esperado`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_aprendizaje_esperado` (
-  `PK_id_aprendizaje_esperado` int(11) NOT NULL,
+  `PK_id_aprendizaje_esperado` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_descripcion` varchar(250) NOT NULL,
   PRIMARY KEY (`PK_id_aprendizaje_esperado`)
 ) ;
@@ -165,7 +165,7 @@ DROP TABLE IF EXISTS `tbl_asignatura`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_asignatura` (
-  `PK_id_asignatura` int(11) NOT NULL,
+  `PK_id_asignatura` int(11) NOT NULL AUTO_INCREMENT,
   `FK_id_campo_disciplinar` int(11) NOT NULL,
   `VCH_nombre` varchar(20) NOT NULL,
   `VCH_clave` varchar(100) NOT NULL,
@@ -219,7 +219,7 @@ DROP TABLE IF EXISTS `tbl_atributo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_atributo` (
-  `PK_id_atributo` int(11) NOT NULL,
+  `PK_id_atributo` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_descripcion` varchar(250) NOT NULL,
   `FLT_identificador` float DEFAULT NULL,
   `FK_id_competencia` int(11) NOT NULL,
@@ -246,7 +246,7 @@ DROP TABLE IF EXISTS `tbl_campo_disciplinar`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_campo_disciplinar` (
-  `PK_id_campo_disciplinar` int(11) NOT NULL,
+  `PK_id_campo_disciplinar` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_nombre` varchar(100) NOT NULL,
   `VCH_clave` varchar(100) NOT NULL,
   PRIMARY KEY (`PK_id_campo_disciplinar`)
@@ -270,7 +270,7 @@ DROP TABLE IF EXISTS `tbl_cargo_revisor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_cargo_revisor` (
-  `PK_id_cargo_revisor` int(11) NOT NULL,
+  `PK_id_cargo_revisor` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_nombre` varchar(20) NOT NULL,
   PRIMARY KEY (`PK_id_cargo_revisor`)
 ) ;
@@ -293,7 +293,7 @@ DROP TABLE IF EXISTS `tbl_competencia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_competencia` (
-  `PK_id_competencia` int(11) NOT NULL,
+  `PK_id_competencia` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_identificador` varchar(20) NOT NULL,
   `VCH_descripcion` varchar(250) NOT NULL,
   `VCH_tipo` varchar(20) NOT NULL,
@@ -318,7 +318,7 @@ DROP TABLE IF EXISTS `tbl_componente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_componente` (
-  `PK_id_componente` int(11) NOT NULL,
+  `PK_id_componente` int(11) NOT NULL AUTO_INCREMENT,
   `FK_id_eje` int(11) NOT NULL,
   `VCH_descripcion` varchar(250) NOT NULL,
   PRIMARY KEY (`PK_id_componente`),
@@ -370,7 +370,7 @@ DROP TABLE IF EXISTS `tbl_cont_central`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_cont_central` (
-  `PK_id_cont_central` int(11) NOT NULL,
+  `PK_id_cont_central` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_descripcion` varchar(250) NOT NULL,
   PRIMARY KEY (`PK_id_cont_central`)
 ) ;
@@ -393,7 +393,7 @@ DROP TABLE IF EXISTS `tbl_cont_especifico`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_cont_especifico` (
-  `PK_id_cont_especifico` int(11) NOT NULL,
+  `PK_id_cont_especifico` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_descripcion` varchar(500) NOT NULL,
   PRIMARY KEY (`PK_id_cont_especifico`)
 ) ;
@@ -494,7 +494,7 @@ DROP TABLE IF EXISTS `tbl_datos_ident`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_datos_ident` (
-  `PK_id_datos_ident` int(11) NOT NULL,
+  `PK_id_datos_ident` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_semestre` varchar(30) NOT NULL,
   `VCH_numero_parcial` varchar(30) NOT NULL,
   `VCH_numero_planeacion` varchar(20) NOT NULL,
@@ -547,7 +547,7 @@ DROP TABLE IF EXISTS `tbl_eje`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_eje` (
-  `PK_id_eje` int(11) NOT NULL,
+  `PK_id_eje` int(11) NOT NULL AUTO_INCREMENT,
   `FK_id_asignatura` int(11) NOT NULL,
   `VCH_descripcion` varchar(150) NOT NULL,
   PRIMARY KEY (`PK_id_eje`),
@@ -573,7 +573,7 @@ DROP TABLE IF EXISTS `tbl_espacio_fisico`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_espacio_fisico` (
-  `PK_id_espacio_fisico` int(11) NOT NULL,
+  `PK_id_espacio_fisico` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_nombre` varchar(1100) NOT NULL,
   PRIMARY KEY (`PK_id_espacio_fisico`)
 ) ;
@@ -596,7 +596,7 @@ DROP TABLE IF EXISTS `tbl_especialidad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_especialidad` (
-  `PK_id_especialidad` int(11) NOT NULL,
+  `PK_id_especialidad` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_nombre` varchar(50) NOT NULL,
   PRIMARY KEY (`PK_id_especialidad`)
 ) ;
@@ -619,7 +619,7 @@ DROP TABLE IF EXISTS `tbl_habil_socioemocional`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_habil_socioemocional` (
-  `PK_id_habil_socioemocional` int(11) NOT NULL,
+  `PK_id_habil_socioemocional` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_descripcion` varchar(250) NOT NULL,
   PRIMARY KEY (`PK_id_habil_socioemocional`)
 ) ;
@@ -642,7 +642,7 @@ DROP TABLE IF EXISTS `tbl_int_comp`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_int_comp` (
-  `PK_id_int_comp` int(11) NOT NULL,
+  `PK_id_int_comp` int(11) NOT NULL AUTO_INCREMENT,
   `FK_id_intenciones_form` int(11) NOT NULL,
   `FK_id_competencia` int(11) NOT NULL,
   `VCH_seccion` varchar(20) NOT NULL,
@@ -669,7 +669,7 @@ DROP TABLE IF EXISTS `tbl_instrumentos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_instrumentos` (
-  `PK_id_instrumentos` int(11) NOT NULL,
+  `PK_id_instrumentos` int(11) NOT NULL AUTO_INCREMENT,
   `FK_id_planeacion` int(11) NOT NULL,
   `TINT_numero` tinyint(1) NOT NULL,
   `VCH_instrumento` varchar(150) NOT NULL,
@@ -778,7 +778,7 @@ DROP TABLE IF EXISTS `tbl_intenciones_form`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_intenciones_form` (
-  `PK_id_intenciones_form` int(11) NOT NULL,
+  `PK_id_intenciones_form` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_proposito` varchar(300) NOT NULL,
   `FK_id_eje` int(11) NOT NULL,
   `FK_id_cont_central` int(11) NOT NULL,
@@ -859,7 +859,7 @@ DROP TABLE IF EXISTS `tbl_nivel_taxonomico`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_nivel_taxonomico` (
-  `PK_id_nivel_taxonomico` int(11) NOT NULL,
+  `PK_id_nivel_taxonomico` int(11) NOT NULL AUTO_INCREMENT,
   `TINT_nivel` tinyint(1) NOT NULL,
   `VCH_verbo` varchar(20) NOT NULL,
   PRIMARY KEY (`PK_id_nivel_taxonomico`)
@@ -883,7 +883,7 @@ DROP TABLE IF EXISTS `tbl_planeacion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_planeacion` (
-  `PK_id_planeacion` int(11) NOT NULL,
+  `PK_id_planeacion` int(11) NOT NULL AUTO_INCREMENT,
   `FK_id_planeacion_cont` int(11) NOT NULL,
   `FK_id_plantel` int(11) NOT NULL,
   `FK_datos_ident` int(11) NOT NULL,
@@ -917,7 +917,7 @@ DROP TABLE IF EXISTS `tbl_planeacion_cont`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_planeacion_cont` (
-  `PK_id_planeacion_cont` int(11) NOT NULL,
+  `PK_id_planeacion_cont` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`PK_id_planeacion_cont`)
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -966,7 +966,7 @@ DROP TABLE IF EXISTS `tbl_plantel`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_plantel` (
-  `PK_id_Plantel` int(11) NOT NULL,
+  `PK_id_Plantel` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_institucion` varchar(20) NOT NULL,
   `VCH_plantel` varchar(20) NOT NULL,
   `VCH_CCT` varchar(20) NOT NULL,
@@ -980,6 +980,7 @@ CREATE TABLE `tbl_plantel` (
 
 LOCK TABLES `tbl_plantel` WRITE;
 /*!40000 ALTER TABLE `tbl_plantel` DISABLE KEYS */;
+INSERT INTO `tbl_plantel` VALUES (0,'Colegio de Estudios Científicos y Tecnológicos del Estado de México','Tequixquiac','15ETC0042H');
 /*!40000 ALTER TABLE `tbl_plantel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -991,7 +992,7 @@ DROP TABLE IF EXISTS `tbl_producto_esperado`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_producto_esperado` (
-  `PK_id_producto_esperado` int(11) NOT NULL,
+  `PK_id_producto_esperado` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_descripcion` varchar(250) NOT NULL,
   PRIMARY KEY (`PK_id_producto_esperado`)
 ) ;
@@ -1014,7 +1015,7 @@ DROP TABLE IF EXISTS `tbl_recursos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_recursos` (
-  `PK_id_recursos` int(11) NOT NULL,
+  `PK_id_recursos` int(11) NOT NULL AUTO_INCREMENT,
   `FK_id_planeacion` int(11) NOT NULL,
   `VCH_equipo` varchar(1100) DEFAULT NULL,
   `VCH_material` varchar(1100) DEFAULT NULL,
@@ -1046,7 +1047,7 @@ DROP TABLE IF EXISTS `tbl_submodulo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_submodulo` (
-  `PK_id_submodulo` int(11) NOT NULL,
+  `PK_id_submodulo` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_nombre` varchar(20) NOT NULL,
   `VCH_clave` varchar(100) NOT NULL,
   `FK_id_especialidad` int(11) NOT NULL,
@@ -1099,7 +1100,7 @@ DROP TABLE IF EXISTS `tbl_tipo_usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_tipo_usuario` (
-  `PK_id_tipo_usuario` int(11) NOT NULL,
+  `PK_id_tipo_usuario` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_nombre` varchar(20) NOT NULL,
   PRIMARY KEY (`PK_id_tipo_usuario`)
 ) ;
@@ -1122,7 +1123,7 @@ DROP TABLE IF EXISTS `tbl_titulo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_titulo` (
-  `PK_id_titulo` int(11) NOT NULL,
+  `PK_id_titulo` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_descripcion` varchar(100) NOT NULL,
   PRIMARY KEY (`PK_id_titulo`)
 ) ;
@@ -1145,7 +1146,7 @@ DROP TABLE IF EXISTS `tbl_usuario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_usuario` (
-  `PK_id_usuario` int(11) NOT NULL,
+  `PK_id_usuario` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_nombre` varchar(20) NOT NULL,
   `VCH_ap_paterno` varchar(20) NOT NULL,
   `VCH_ap_materno` varchar(20) NOT NULL,
