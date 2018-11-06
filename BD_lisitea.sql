@@ -548,11 +548,8 @@ DROP TABLE IF EXISTS `tbl_eje`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_eje` (
   `PK_id_eje` int(11) NOT NULL AUTO_INCREMENT,
-  `FK_id_asignatura` int(11) NOT NULL,
   `VCH_descripcion` varchar(150) NOT NULL,
-  PRIMARY KEY (`PK_id_eje`),
-  KEY `FK_id_asignatura_idx` (`FK_id_asignatura`),
-  CONSTRAINT `FK_id_asignatura_1` FOREIGN KEY (`FK_id_asignatura`) REFERENCES `tbl_asignatura` (`pk_id_asignatura`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`PK_id_eje`)
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -563,6 +560,58 @@ CREATE TABLE `tbl_eje` (
 LOCK TABLES `tbl_eje` WRITE;
 /*!40000 ALTER TABLE `tbl_eje` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tbl_eje` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_asignatura_eje`
+--
+
+DROP TABLE IF EXISTS `tbl_asignatura_eje`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `tbl_asignatura_eje` (
+  `PFK_id_asignatura` int(11) NOT NULL,
+  `PFK_id_eje` int(11) NOT NULL,
+  PRIMARY KEY (`PFK_id_asignatura`,`PFK_id_eje`),
+  KEY `PFK_id_eje_idx` (`PFK_id_eje`),
+  CONSTRAINT `PFK_id_asignatura_1` FOREIGN KEY (`PFK_id_asignatura`) REFERENCES `tbl_asignatura` (`pk_id_asignatura`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `PFK_id_eje_1` FOREIGN KEY (`PFK_id_eje`) REFERENCES `tbl_eje` (`pk_id_eje`) ON DELETE CASCADE ON UPDATE CASCADE
+) ;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_asignatura_eje`
+--
+
+LOCK TABLES `tbl_asignatura_eje` WRITE;
+/*!40000 ALTER TABLE `tbl_asignatura_eje` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_asignatura_eje` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_submodulo_eje`
+--
+
+DROP TABLE IF EXISTS `tbl_submodulo_eje`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `tbl_submodulo_eje` (
+  `PFK_id_submodulo` int(11) NOT NULL,
+  `PFK_id_eje` int(11) NOT NULL,
+  PRIMARY KEY (`PFK_id_submodulo`,`PFK_id_eje`),
+  KEY `PFK_id_eje_idx` (`PFK_id_eje`),
+  CONSTRAINT `PFK_id_submodulo` FOREIGN KEY (`PFK_id_submodulo`) REFERENCES `tbl_submodulo` (`pk_id_submodulo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `PFK_id_eje` FOREIGN KEY (`PFK_id_eje`) REFERENCES `tbl_eje` (`pk_id_eje`) ON DELETE CASCADE ON UPDATE CASCADE
+) ;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_submodulo_eje`
+--
+
+LOCK TABLES `tbl_submodulo_eje` WRITE;
+/*!40000 ALTER TABLE `tbl_submodulo_eje` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_submodulo_eje` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1040,6 +1089,33 @@ LOCK TABLES `tbl_recursos` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tbl_modulo`
+--
+
+DROP TABLE IF EXISTS `tbl_modulo`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `tbl_modulo` (
+  `PK_id_modulo` int(11) NOT NULL AUTO_INCREMENT,
+  `VCH_nombre` varchar(20) NOT NULL,
+  `VCH_clave` varchar(100) NOT NULL,
+  `FK_id_especialidad` int(11) NOT NULL,
+  PRIMARY KEY (`PK_id_modulo`),
+  KEY `FK_id_especialidad_idx` (`FK_id_especialidad`),
+  CONSTRAINT `FK_id_especialidad` FOREIGN KEY (`FK_id_especialidad`) REFERENCES `tbl_especialidad` (`pk_id_especialidad`) ON DELETE CASCADE ON UPDATE CASCADE
+) ;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_modulo`
+--
+
+LOCK TABLES `tbl_modulo` WRITE;
+/*!40000 ALTER TABLE `tbl_modulo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_modulo` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tbl_submodulo`
 --
 
@@ -1050,10 +1126,10 @@ CREATE TABLE `tbl_submodulo` (
   `PK_id_submodulo` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_nombre` varchar(20) NOT NULL,
   `VCH_clave` varchar(100) NOT NULL,
-  `FK_id_especialidad` int(11) NOT NULL,
+  `FK_id_modulo` int(11) NOT NULL,
   PRIMARY KEY (`PK_id_submodulo`),
-  KEY `FK_id_especialidad_idx` (`FK_id_especialidad`),
-  CONSTRAINT `FK_id_especialidad` FOREIGN KEY (`FK_id_especialidad`) REFERENCES `tbl_especialidad` (`pk_id_especialidad`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `FK_id_modulo_idx` (`FK_id_modulo`),
+  CONSTRAINT `FK_id_modulo` FOREIGN KEY (`FK_id_modulo`) REFERENCES `tbl_modulo` (`pk_id_modulo`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
