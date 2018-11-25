@@ -45,14 +45,14 @@ LOCK TABLES `tbl_actividad` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tbl_actividades_aprend`
+-- Table structure for table `tbl_actividades_aprendizaje`
 --
 
-DROP TABLE IF EXISTS `tbl_actividades_aprend`;
+DROP TABLE IF EXISTS `tbl_actividades_aprendizaje`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 SET character_set_client = utf8mb4 ;
-CREATE TABLE `tbl_actividades_aprend` (
-  `PK_id_actividades_aprend` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_actividades_aprendizaje` (
+  `PK_id_actividades_aprendizaje` int(11) NOT NULL AUTO_INCREMENT,
   `FK_id_planeacion` int(11) NOT NULL,
   `FK_id_actividad` int(11) NOT NULL,
   `FK_id_nivel_taxonomico` int(11) NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE `tbl_actividades_aprend` (
   `VCH_tipo_instrumento` varchar(20) NOT NULL,
   `VCH_instrumento` varchar(150) NOT NULL,
   `VCH_indicador` varchar(200) NOT NULL,
-  PRIMARY KEY (`PK_id_actividades_aprend`),
+  PRIMARY KEY (`PK_id_actividades_aprendizaje`),
   KEY `FK_id_planeacion_idx` (`FK_id_planeacion`),
   KEY `FK_id_actividad_idx` (`FK_id_actividad`),
   KEY `FK_id_nivel_taxonomico_idx` (`FK_id_nivel_taxonomico`),
@@ -73,12 +73,12 @@ CREATE TABLE `tbl_actividades_aprend` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tbl_actividades_aprend`
+-- Dumping data for table `tbl_actividades_aprendizaje`
 --
 
-LOCK TABLES `tbl_actividades_aprend` WRITE;
-/*!40000 ALTER TABLE `tbl_actividades_aprend` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_actividades_aprend` ENABLE KEYS */;
+LOCK TABLES `tbl_actividades_aprendizaje` WRITE;
+/*!40000 ALTER TABLE `tbl_actividades_aprendizaje` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_actividades_aprendizaje` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -89,13 +89,13 @@ DROP TABLE IF EXISTS `tbl_actividades_competencia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_actividades_competencia` (
-  `PFK_id_actividaes_aprend` int(11) NOT NULL,
-  `PFK_id_int_comp` int(11) NOT NULL,
+  `PFK_id_actividades_aprendizaje` int(11) NOT NULL,
+  `PFK_id_intenciones_competencia` int(11) NOT NULL,
   `VCH_seccion` varchar(20) NOT NULL,
-  PRIMARY KEY (`PFK_id_actividaes_aprend`,`PFK_id_int_comp`),
-  KEY `PFK_id_int_comp_idx` (`PFK_id_int_comp`),
-  CONSTRAINT `PFK_id_actividaes_aprend` FOREIGN KEY (`PFK_id_actividaes_aprend`) REFERENCES `tbl_actividades_aprend` (`pk_id_actividades_aprend`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PFK_id_int_comp` FOREIGN KEY (`PFK_id_int_comp`) REFERENCES `tbl_int_comp` (`PK_id_int_comp`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`PFK_id_actividades_aprendizaje`,`PFK_id_intenciones_competencia`),
+  KEY `PFK_id_intenciones_competencia_idx` (`PFK_id_intenciones_competencia`),
+  CONSTRAINT `PFK_id_actividades_aprendizaje` FOREIGN KEY (`PFK_id_actividades_aprendizaje`) REFERENCES `tbl_actividades_aprendizaje` (`pk_id_actividades_aprendizaje`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `PFK_id_intenciones_competencia` FOREIGN KEY (`PFK_id_intenciones_competencia`) REFERENCES `tbl_intenciones_competencia` (`PK_id_intenciones_competencia`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -139,8 +139,8 @@ DROP TABLE IF EXISTS `tbl_aprendizaje_producto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_aprendizaje_producto` (
-  `PFK_id_aprendizaje_esperado` int(11) NOT NULL,
   `PFK_id_producto_esperado` int(11) NOT NULL,
+  `PFK_id_aprendizaje_esperado` int(11) NOT NULL,
   PRIMARY KEY (`PFK_id_aprendizaje_esperado`,`PFK_id_producto_esperado`),
   KEY `PFK_id_producto_esperado_idx` (`PFK_id_producto_esperado`),
   CONSTRAINT `PFK_id_aprendizaje_esperado2` FOREIGN KEY (`PFK_id_aprendizaje_esperado`) REFERENCES `tbl_aprendizaje_esperado` (`pk_id_aprendizaje_esperado`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -193,8 +193,8 @@ DROP TABLE IF EXISTS `tbl_asignatura_competencia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_asignatura_competencia` (
-  `PFK_id_asignatura` int(11) NOT NULL,
   `PFK_id_competencia` int(11) NOT NULL,
+  `PFK_id_asignatura` int(11) NOT NULL,
   PRIMARY KEY (`PFK_id_asignatura`,`PFK_id_competencia`),
   KEY `PFK_id_competencia_idx` (`PFK_id_competencia`),
   CONSTRAINT `PFK_id_asignatura` FOREIGN KEY (`PFK_id_asignatura`) REFERENCES `tbl_asignatura` (`pk_id_asignatura`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -263,29 +263,6 @@ LOCK TABLES `tbl_campo_disciplinar` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tbl_cargo_revisor`
---
-
-DROP TABLE IF EXISTS `tbl_cargo_revisor`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `tbl_cargo_revisor` (
-  `PK_id_cargo_revisor` int(11) NOT NULL AUTO_INCREMENT,
-  `VCH_nombre` varchar(20) NOT NULL,
-  PRIMARY KEY (`PK_id_cargo_revisor`)
-) ;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tbl_cargo_revisor`
---
-
-LOCK TABLES `tbl_cargo_revisor` WRITE;
-/*!40000 ALTER TABLE `tbl_cargo_revisor` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_cargo_revisor` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `tbl_competencia`
 --
 
@@ -337,52 +314,52 @@ LOCK TABLES `tbl_componente` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tbl_cont_central`
+-- Table structure for table `tbl_contenido_central`
 --
 
-DROP TABLE IF EXISTS `tbl_cont_central`;
+DROP TABLE IF EXISTS `tbl_contenido_central`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `tbl_cont_central` (
-  `PK_id_cont_central` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_contenido_central` (
+  `PK_id_contenido_central` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_descripcion` varchar(250) NOT NULL,
   `FK_id_componente` int(11) NOT NULL,
-  PRIMARY KEY (`PK_id_cont_central`),
+  PRIMARY KEY (`PK_id_contenido_central`),
   KEY `FK_id_componente_idx` (`FK_id_componente`),
   CONSTRAINT `FK_id_componente` FOREIGN KEY (`FK_id_componente`) REFERENCES `tbl_componente` (`PK_id_componente`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tbl_cont_central`
+-- Dumping data for table `tbl_contenido_central`
 --
 
-LOCK TABLES `tbl_cont_central` WRITE;
-/*!40000 ALTER TABLE `tbl_cont_central` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_cont_central` ENABLE KEYS */;
+LOCK TABLES `tbl_contenido_central` WRITE;
+/*!40000 ALTER TABLE `tbl_contenido_central` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_contenido_central` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tbl_cont_especifico`
+-- Table structure for table `tbl_contenido_especifico`
 --
 
-DROP TABLE IF EXISTS `tbl_cont_especifico`;
+DROP TABLE IF EXISTS `tbl_contenido_especifico`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `tbl_cont_especifico` (
-  `PK_id_cont_especifico` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_contenido_especifico` (
+  `PK_id_contenido_especifico` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_descripcion` varchar(500) NOT NULL,
-  PRIMARY KEY (`PK_id_cont_especifico`)
+  PRIMARY KEY (`PK_id_contenido_especifico`)
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tbl_cont_especifico`
+-- Dumping data for table `tbl_contenido_especifico`
 --
 
-LOCK TABLES `tbl_cont_especifico` WRITE;
-/*!40000 ALTER TABLE `tbl_cont_especifico` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_cont_especifico` ENABLE KEYS */;
+LOCK TABLES `tbl_contenido_especifico` WRITE;
+/*!40000 ALTER TABLE `tbl_contenido_especifico` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_contenido_especifico` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -393,12 +370,12 @@ DROP TABLE IF EXISTS `tbl_contenido_aprendizaje`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_contenido_aprendizaje` (
-  `PFK_id_cont_especifico` int(11) NOT NULL,
   `PFK_id_aprendizaje_esperado` int(11) NOT NULL,
-  PRIMARY KEY (`PFK_id_cont_especifico`,`PFK_id_aprendizaje_esperado`),
+  `PFK_id_contenido_especifico` int(11) NOT NULL,
+  PRIMARY KEY (`PFK_id_contenido_especifico`,`PFK_id_aprendizaje_esperado`),
   KEY `PFK_id_aprendizaje_esperado_idx` (`PFK_id_aprendizaje_esperado`),
   CONSTRAINT `PFK_id_aprendizaje_esperado1` FOREIGN KEY (`PFK_id_aprendizaje_esperado`) REFERENCES `tbl_aprendizaje_esperado` (`pk_id_aprendizaje_esperado`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PFK_id_cont_especifico1` FOREIGN KEY (`PFK_id_cont_especifico`) REFERENCES `tbl_cont_especifico` (`pk_id_cont_especifico`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `PFK_id_contenido_especifico1` FOREIGN KEY (`PFK_id_contenido_especifico`) REFERENCES `tbl_contenido_especifico` (`pk_id_contenido_especifico`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -419,12 +396,12 @@ DROP TABLE IF EXISTS `tbl_contenido_contenido`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_contenido_contenido` (
-  `PFK_id_cont_central` int(11) NOT NULL,
-  `PFK_id_cont_especifico` int(11) NOT NULL,
-  PRIMARY KEY (`PFK_id_cont_central`,`PFK_id_cont_especifico`),
-  KEY `PFK_id_cont_especifico_idx` (`PFK_id_cont_especifico`),
-  CONSTRAINT `PFK_id_cont_central3` FOREIGN KEY (`PFK_id_cont_central`) REFERENCES `tbl_con_central` (`pk_id_con_central`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PFK_id_cont_especifico3` FOREIGN KEY (`PFK_id_cont_especifico`) REFERENCES `tbl_cont_especifico` (`pk_id_cont_especifico`) ON DELETE CASCADE ON UPDATE CASCADE
+  `PFK_id_contenido_especifico` int(11) NOT NULL,
+  `PFK_id_contenido_central` int(11) NOT NULL,
+  PRIMARY KEY (`PFK_id_contenido_central`,`PFK_id_contenido_especifico`),
+  KEY `PFK_id_contenido_especifico_idx` (`PFK_id_contenido_especifico`),
+  CONSTRAINT `PFK_id_contenido_central3` FOREIGN KEY (`PFK_id_contenido_central`) REFERENCES `tbl_con_central` (`pk_id_con_central`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `PFK_id_contenido_especifico3` FOREIGN KEY (`PFK_id_contenido_especifico`) REFERENCES `tbl_contenido_especifico` (`pk_id_contenido_especifico`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -445,12 +422,12 @@ DROP TABLE IF EXISTS `tbl_datos_asignatura`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_datos_asignatura` (
-  `PFK_id_datos_ident` int(11) NOT NULL,
+  `PFK_id_datos_identificacion` int(11) NOT NULL,
   `PFK_id_asignatura` int(11) NOT NULL,
-  PRIMARY KEY (`PFK_id_datos_ident`,`PFK_id_asignatura`),
+  PRIMARY KEY (`PFK_id_datos_identificacion`,`PFK_id_asignatura`),
   KEY `PFK_id_asignatura_idx` (`PFK_id_asignatura`),
   CONSTRAINT `PFK_id_asignatura2` FOREIGN KEY (`PFK_id_asignatura`) REFERENCES `tbl_asignatura` (`pk_id_asignatura`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PFK_id_datos_ident1` FOREIGN KEY (`PFK_id_datos_ident`) REFERENCES `tbl_datos_ident` (`PK_id_datos_ident`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `PFK_id_datos_identificacion1` FOREIGN KEY (`PFK_id_datos_identificacion`) REFERENCES `tbl_datos_identificacion` (`PK_id_datos_identificacion`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -464,30 +441,30 @@ LOCK TABLES `tbl_datos_asignatura` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tbl_datos_ident`
+-- Table structure for table `tbl_datos_identificacion`
 --
 
-DROP TABLE IF EXISTS `tbl_datos_ident`;
+DROP TABLE IF EXISTS `tbl_datos_identificacion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `tbl_datos_ident` (
-  `PK_id_datos_ident` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_datos_identificacion` (
+  `PK_id_datos_identificacion` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_semestre` varchar(30) NOT NULL,
   `VCH_numero_parcial` varchar(30) NOT NULL,
   `VCH_numero_planeacion` varchar(20) NOT NULL,
   `VCH_titulo_planeacion` varchar(50) NOT NULL,
   `TINT_porcentaje` tinyint(1) NOT NULL,
-  PRIMARY KEY (`PK_id_datos_ident`)
+  PRIMARY KEY (`PK_id_datos_identificacion`)
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tbl_datos_ident`
+-- Dumping data for table `tbl_datos_identificacion`
 --
 
-LOCK TABLES `tbl_datos_ident` WRITE;
-/*!40000 ALTER TABLE `tbl_datos_ident` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_datos_ident` ENABLE KEYS */;
+LOCK TABLES `tbl_datos_identificacion` WRITE;
+/*!40000 ALTER TABLE `tbl_datos_identificacion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_datos_identificacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -498,11 +475,11 @@ DROP TABLE IF EXISTS `tbl_datos_submodulo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_datos_submodulo` (
-  `PFK_id_datos_ident` int(11) NOT NULL,
+  `PFK_id_datos_identificacion` int(11) NOT NULL,
   `PFK_id_submodulo` int(11) NOT NULL,
-  PRIMARY KEY (`PFK_id_datos_ident`,`PFK_id_submodulo`),
+  PRIMARY KEY (`PFK_id_datos_identificacion`,`PFK_id_submodulo`),
   KEY `PFK_id_submodulo_idx` (`PFK_id_submodulo`),
-  CONSTRAINT `PFK_id_datos_ident_3` FOREIGN KEY (`PFK_id_datos_ident`) REFERENCES `tbl_datos_ident` (`PK_id_datos_ident`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `PFK_id_datos_identificacion_3` FOREIGN KEY (`PFK_id_datos_identificacion`) REFERENCES `tbl_datos_identificacion` (`PK_id_datos_identificacion`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `PFK_id_submodulo_3` FOREIGN KEY (`PFK_id_submodulo`) REFERENCES `tbl_submodulo` (`pk_id_submodulo`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -547,8 +524,8 @@ DROP TABLE IF EXISTS `tbl_asignatura_eje`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_asignatura_eje` (
-  `PFK_id_asignatura` int(11) NOT NULL,
   `PFK_id_eje` int(11) NOT NULL,
+  `PFK_id_asignatura` int(11) NOT NULL,
   PRIMARY KEY (`PFK_id_asignatura`,`PFK_id_eje`),
   KEY `PFK_id_eje_idx` (`PFK_id_eje`),
   CONSTRAINT `PFK_id_asignatura_1` FOREIGN KEY (`PFK_id_asignatura`) REFERENCES `tbl_asignatura` (`pk_id_asignatura`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -573,8 +550,8 @@ DROP TABLE IF EXISTS `tbl_submodulo_eje`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_submodulo_eje` (
-  `PFK_id_submodulo` int(11) NOT NULL,
   `PFK_id_eje` int(11) NOT NULL,
+  `PFK_id_submodulo` int(11) NOT NULL,
   PRIMARY KEY (`PFK_id_submodulo`,`PFK_id_eje`),
   KEY `PFK_id_eje_idx` (`PFK_id_eje`),
   CONSTRAINT `PFK_id_submodulo` FOREIGN KEY (`PFK_id_submodulo`) REFERENCES `tbl_submodulo` (`pk_id_submodulo`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -638,53 +615,53 @@ LOCK TABLES `tbl_especialidad` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tbl_habil_socioemocional`
+-- Table structure for table `tbl_habilidad_socioemocional`
 --
 
-DROP TABLE IF EXISTS `tbl_habil_socioemocional`;
+DROP TABLE IF EXISTS `tbl_habilidad_socioemocional`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `tbl_habil_socioemocional` (
-  `PK_id_habil_socioemocional` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_habilidad_socioemocional` (
+  `PK_id_habilidad_socioemocional` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_descripcion` varchar(250) NOT NULL,
-  PRIMARY KEY (`PK_id_habil_socioemocional`)
+  PRIMARY KEY (`PK_id_habilidad_socioemocional`)
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tbl_habil_socioemocional`
+-- Dumping data for table `tbl_habilidad_socioemocional`
 --
 
-LOCK TABLES `tbl_habil_socioemocional` WRITE;
-/*!40000 ALTER TABLE `tbl_habil_socioemocional` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_habil_socioemocional` ENABLE KEYS */;
+LOCK TABLES `tbl_habilidad_socioemocional` WRITE;
+/*!40000 ALTER TABLE `tbl_habilidad_socioemocional` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_habilidad_socioemocional` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tbl_int_comp`
+-- Table structure for table `tbl_intenciones_competencia`
 --
 
-DROP TABLE IF EXISTS `tbl_int_comp`;
+DROP TABLE IF EXISTS `tbl_intenciones_competencia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `tbl_int_comp` (
-  `PK_id_int_comp` int(11) NOT NULL AUTO_INCREMENT,
-  `FK_id_intenciones_form` int(11) NOT NULL,
+CREATE TABLE `tbl_intenciones_competencia` (
+  `PK_id_intenciones_competencia` int(11) NOT NULL AUTO_INCREMENT,
+  `FK_id_intenciones_formativas` int(11) NOT NULL,
   `FK_id_competencia` int(11) NOT NULL,
   `VCH_seccion` varchar(20) NOT NULL,
-  PRIMARY KEY (`PK_id_int_comp`),
-  KEY `FK_id_intenciones_form3_idx` (`FK_id_intenciones_form`),
-  CONSTRAINT `FK_id_intenciones_form3` FOREIGN KEY (`FK_id_intenciones_form`) REFERENCES `tbl_intenciones_form` (`pk_id_intenciones_form`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`PK_id_intenciones_competencia`),
+  KEY `FK_id_intenciones_formativas3_idx` (`FK_id_intenciones_formativas`),
+  CONSTRAINT `FK_id_intenciones_formativas3` FOREIGN KEY (`FK_id_intenciones_formativas`) REFERENCES `tbl_intenciones_formativas` (`pk_id_intenciones_formativas`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tbl_int_comp`
+-- Dumping data for table `tbl_intenciones_competencia`
 --
 
-LOCK TABLES `tbl_int_comp` WRITE;
-/*!40000 ALTER TABLE `tbl_int_comp` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_int_comp` ENABLE KEYS */;
+LOCK TABLES `tbl_intenciones_competencia` WRITE;
+/*!40000 ALTER TABLE `tbl_intenciones_competencia` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_intenciones_competencia` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -726,12 +703,12 @@ DROP TABLE IF EXISTS `tbl_intenciones_aprendizaje`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_intenciones_aprendizaje` (
-  `PFK_id_intenciones_form` int(11) NOT NULL,
+  `PFK_id_intenciones_formativas` int(11) NOT NULL,
   `PFK_id_aprendizaje_esperado` int(11) NOT NULL,
-  PRIMARY KEY (`PFK_id_intenciones_form`,`PFK_id_aprendizaje_esperado`),
+  PRIMARY KEY (`PFK_id_intenciones_formativas`,`PFK_id_aprendizaje_esperado`),
   KEY `PFK_id_aprendizaje_esperado_idx` (`PFK_id_aprendizaje_esperado`),
   CONSTRAINT `PFK_id_aprendizaje_esperado4` FOREIGN KEY (`PFK_id_aprendizaje_esperado`) REFERENCES `tbl_aprendizaje_esperado` (`pk_id_aprendizaje_esperado`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PFK_id_intenciones_form4` FOREIGN KEY (`PFK_id_intenciones_form`) REFERENCES `tbl_intenciones_form` (`pk_id_intenciones_form`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `PFK_id_intenciones_formativas4` FOREIGN KEY (`PFK_id_intenciones_formativas`) REFERENCES `tbl_intenciones_formativas` (`pk_id_intenciones_formativas`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -752,12 +729,12 @@ DROP TABLE IF EXISTS `tbl_intenciones_componente`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_intenciones_componente` (
-  `PFK_id_intenciones_form` int(11) NOT NULL,
+  `PFK_id_intenciones_formativas` int(11) NOT NULL,
   `PFK_id_componente` int(11) NOT NULL,
-  PRIMARY KEY (`PFK_id_intenciones_form`,`PFK_id_componente`),
+  PRIMARY KEY (`PFK_id_intenciones_formativas`,`PFK_id_componente`),
   KEY `PFK_id_componente3_idx` (`PFK_id_componente`),
   CONSTRAINT `PFK_id_componente3` FOREIGN KEY (`PFK_id_componente`) REFERENCES `tbl_componente` (`pk_id_componente`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PFK_id_intenciones_form3` FOREIGN KEY (`PFK_id_intenciones_form`) REFERENCES `tbl_intenciones_form` (`pk_id_intenciones_form`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `PFK_id_intenciones_formativas3` FOREIGN KEY (`PFK_id_intenciones_formativas`) REFERENCES `tbl_intenciones_formativas` (`pk_id_intenciones_formativas`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -778,12 +755,12 @@ DROP TABLE IF EXISTS `tbl_intenciones_contenido`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_intenciones_contenido` (
-  `PFK_id_intenciones_form` int(11) NOT NULL,
-  `PFK_id_cont_especifico` int(11) NOT NULL,
-  PRIMARY KEY (`PFK_id_intenciones_form`,`PFK_id_cont_especifico`),
-  KEY `PFK_id_cont_especifico_idx` (`PFK_id_cont_especifico`),
-  CONSTRAINT `PFK_id_cont_especifico2` FOREIGN KEY (`PFK_id_cont_especifico`) REFERENCES `tbl_cont_especifico` (`pk_id_cont_especifico`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PFK_id_intenciones_form2` FOREIGN KEY (`PFK_id_intenciones_form`) REFERENCES `tbl_intenciones_form` (`pk_id_intenciones_form`) ON DELETE CASCADE ON UPDATE CASCADE
+  `PFK_id_intenciones_formativas` int(11) NOT NULL,
+  `PFK_id_contenido_especifico` int(11) NOT NULL,
+  PRIMARY KEY (`PFK_id_intenciones_formativas`,`PFK_id_contenido_especifico`),
+  KEY `PFK_id_contenido_especifico_idx` (`PFK_id_contenido_especifico`),
+  CONSTRAINT `PFK_id_contenido_especifico2` FOREIGN KEY (`PFK_id_contenido_especifico`) REFERENCES `tbl_contenido_especifico` (`pk_id_contenido_especifico`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `PFK_id_intenciones_formativas2` FOREIGN KEY (`PFK_id_intenciones_formativas`) REFERENCES `tbl_intenciones_formativas` (`pk_id_intenciones_formativas`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -797,21 +774,21 @@ LOCK TABLES `tbl_intenciones_contenido` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tbl_intenciones_form`
+-- Table structure for table `tbl_intenciones_formativas`
 --
 
-DROP TABLE IF EXISTS `tbl_intenciones_form`;
+DROP TABLE IF EXISTS `tbl_intenciones_formativas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `tbl_intenciones_form` (
-  `PK_id_intenciones_form` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `tbl_intenciones_formativas` (
+  `PK_id_intenciones_formativas` int(11) NOT NULL AUTO_INCREMENT,
   `VCH_proposito` varchar(300) NOT NULL,
   `FK_id_eje` int(11) NOT NULL,
-  `FK_id_cont_central` int(11) NOT NULL,
-  PRIMARY KEY (`PK_id_intenciones_form`),
+  `FK_id_contenido_central` int(11) NOT NULL,
+  PRIMARY KEY (`PK_id_intenciones_formativas`),
   KEY `FK_id_eje1_idx` (`FK_id_eje`),
-  KEY `FK_id_cont_central1_idx` (`FK_id_cont_central`),
-  CONSTRAINT `FK_id_cont_central1` FOREIGN KEY (`FK_id_cont_central`) REFERENCES `tbl_cont_central` (`pk_id_cont_central`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `FK_id_contenido_central1_idx` (`FK_id_contenido_central`),
+  CONSTRAINT `FK_id_contenido_central1` FOREIGN KEY (`FK_id_contenido_central`) REFERENCES `tbl_contenido_central` (`pk_id_contenido_central`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_id_eje1` FOREIGN KEY (`FK_id_eje`) REFERENCES `tbl_eje` (`pk_id_eje`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -820,9 +797,9 @@ CREATE TABLE `tbl_intenciones_form` (
 -- Dumping data for table `tbl_intenciones_formativas`
 --
 
-LOCK TABLES `tbl_intenciones_form` WRITE;
-/*!40000 ALTER TABLE `tbl_intenciones_form` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_intenciones_form` ENABLE KEYS */;
+LOCK TABLES `tbl_intenciones_formativas` WRITE;
+/*!40000 ALTER TABLE `tbl_intenciones_formativas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_intenciones_formativas` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -833,12 +810,12 @@ DROP TABLE IF EXISTS `tbl_intenciones_habilidad`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_intenciones_habilidad` (
-  `PFK_id_intenciones_form` int(11) NOT NULL,
+  `PFK_id_intenciones_formativas` int(11) NOT NULL,
   `PFK_habilidad_socioemocional` int(11) NOT NULL,
-  PRIMARY KEY (`PFK_id_intenciones_form`,`PFK_habilidad_socioemocional`),
+  PRIMARY KEY (`PFK_id_intenciones_formativas`,`PFK_habilidad_socioemocional`),
   KEY `PFK_habilidad_socioemocional6_idx` (`PFK_habilidad_socioemocional`),
-  CONSTRAINT `PFK_habilidad_socioemocional6` FOREIGN KEY (`PFK_habilidad_socioemocional`) REFERENCES `tbl_habil_socioemocional` (`PK_id_habil_socioemocional`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PFK_id_intenciones_form6` FOREIGN KEY (`PFK_id_intenciones_form`) REFERENCES `tbl_intenciones_form` (`pk_id_intenciones_form`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `PFK_habilidad_socioemocional6` FOREIGN KEY (`PFK_habilidad_socioemocional`) REFERENCES `tbl_habilidad_socioemocional` (`PK_id_habilidad_socioemocional`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `PFK_id_intenciones_formativas6` FOREIGN KEY (`PFK_id_intenciones_formativas`) REFERENCES `tbl_intenciones_formativas` (`pk_id_intenciones_formativas`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -859,11 +836,11 @@ DROP TABLE IF EXISTS `tbl_intenciones_producto`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_intenciones_producto` (
-  `PFK_id_intenciones_form` int(11) NOT NULL,
+  `PFK_id_intenciones_formativas` int(11) NOT NULL,
   `PFK_id_producto_esperado` int(11) NOT NULL,
-  PRIMARY KEY (`PFK_id_intenciones_form`,`PFK_id_producto_esperado`),
+  PRIMARY KEY (`PFK_id_intenciones_formativas`,`PFK_id_producto_esperado`),
   KEY `PFK_id_producto_esperado4_idx` (`PFK_id_producto_esperado`),
-  CONSTRAINT `PFK_id_intenciones_form5` FOREIGN KEY (`PFK_id_intenciones_form`) REFERENCES `tbl_intenciones_form` (`pk_id_intenciones_form`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `PFK_id_intenciones_formativas5` FOREIGN KEY (`PFK_id_intenciones_formativas`) REFERENCES `tbl_intenciones_formativas` (`pk_id_intenciones_formativas`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `PFK_id_producto_esperado5` FOREIGN KEY (`PFK_id_producto_esperado`) REFERENCES `tbl_producto_esperado` (`pk_id_producto_esperado`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -912,15 +889,15 @@ CREATE TABLE `tbl_planeacion` (
   `PK_id_planeacion` int(11) NOT NULL AUTO_INCREMENT,
   `FK_id_planeacion_cont` int(11) NOT NULL,
   `FK_id_plantel` int(11) NOT NULL,
-  `FK_datos_ident` int(11) NOT NULL,
-  `FK_id_intenciones_form` int(11) NOT NULL,
+  `FK_datos_identificacion` int(11) NOT NULL,
+  `FK_id_intenciones_formativas` int(11) NOT NULL,
   PRIMARY KEY (`PK_id_planeacion`),
   KEY `FK_id_planeacion_cont_idx` (`FK_id_planeacion_cont`),
   KEY `FK_id_plantel_idx` (`FK_id_plantel`),
-  KEY `FK_datos_ident_idx` (`FK_datos_ident`),
-  KEY `FK_id_intenciones_form_idx` (`FK_id_intenciones_form`),
-  CONSTRAINT `FK_datos_ident` FOREIGN KEY (`FK_datos_ident`) REFERENCES `tbl_datos_ident` (`PK_id_datos_ident`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `FK_id_intenciones_form` FOREIGN KEY (`FK_id_intenciones_form`) REFERENCES `tbl_intenciones_form` (`pk_id_intenciones_form`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `FK_datos_identificacion_idx` (`FK_datos_identificacion`),
+  KEY `FK_id_intenciones_formativas_idx` (`FK_id_intenciones_formativas`),
+  CONSTRAINT `FK_datos_identificacion` FOREIGN KEY (`FK_datos_identificacion`) REFERENCES `tbl_datos_identificacion` (`PK_id_datos_identificacion`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_id_intenciones_formativas` FOREIGN KEY (`FK_id_intenciones_formativas`) REFERENCES `tbl_intenciones_formativas` (`pk_id_intenciones_formativas`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_id_planeacion_cont` FOREIGN KEY (`FK_id_planeacion_cont`) REFERENCES `tbl_planeacion_cont` (`pk_id_planeacion_cont`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_id_plantel` FOREIGN KEY (`FK_id_plantel`) REFERENCES `tbl_plantel` (`pk_id_plantel`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
@@ -1127,8 +1104,8 @@ DROP TABLE IF EXISTS `tbl_submodulo_competencia`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `tbl_submodulo_competencia` (
-  `PFK_id_submodulo` int(11) NOT NULL,
   `PFK_id_competencia` int(11) NOT NULL,
+  `PFK_id_submodulo` int(11) NOT NULL,
   PRIMARY KEY (`PFK_id_submodulo`,`PFK_id_competencia`),
   KEY `PFK_id_competencia_idx` (`PFK_id_competencia`),
   CONSTRAINT `PFK_id_competencia_2` FOREIGN KEY (`PFK_id_competencia`) REFERENCES `tbl_competencia` (`pk_id_competencia`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -1206,7 +1183,10 @@ CREATE TABLE `tbl_usuario` (
   `VCH_curp` varchar(18) NOT NULL,
   `VCH_contrasenia` varchar(10) NOT NULL,
   `VCH_correo_electronico` varchar(40) NOT NULL,
-  PRIMARY KEY (`PK_id_usuario`)
+  `FK_id_tipo_usuario` int(11) NOT NULL,
+  PRIMARY KEY (`PK_id_usuario`),
+  KEY `FK_id_tipo_usuario_idx` (`FK_id_tipo_usuario`),
+  CONSTRAINT `FK_id_tipo_usuario` FOREIGN KEY (`FK_id_tipo_usuario`) REFERENCES `tbl_tipo_usuario` (`pk_id_tipo_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1219,58 +1199,6 @@ LOCK TABLES `tbl_usuario` WRITE;
 /*!40000 ALTER TABLE `tbl_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Table structure for table `tbl_usuario_cargo`
---
-
-DROP TABLE IF EXISTS `tbl_usuario_cargo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `tbl_usuario_cargo` (
-  `PFK_id_usuario` int(11) NOT NULL,
-  `PFK_id_cargo_revisor` int(11) NOT NULL,
-  PRIMARY KEY (`PFK_id_usuario`,`PFK_id_cargo_revisor`),
-  KEY `PFK_id_cargo_revisor_idx` (`PFK_id_cargo_revisor`),
-  CONSTRAINT `PFK_id_cargo_revisor` FOREIGN KEY (`PFK_id_cargo_revisor`) REFERENCES `tbl_cargo_revisor` (`pk_id_cargo_revisor`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PFK_id_usuario` FOREIGN KEY (`PFK_id_usuario`) REFERENCES `tbl_usuario` (`pk_id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tbl_usuario_cargo`
---
-
-LOCK TABLES `tbl_usuario_cargo` WRITE;
-/*!40000 ALTER TABLE `tbl_usuario_cargo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_usuario_cargo` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `tbl_usuario_tipo`
---
-
-DROP TABLE IF EXISTS `tbl_usuario_tipo`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
- SET character_set_client = utf8mb4 ;
-CREATE TABLE `tbl_usuario_tipo` (
-  `PFK_id_usuario` int(11) NOT NULL,
-  `PFK_id_tipo_usuario` int(11) NOT NULL,
-  PRIMARY KEY (`PFK_id_usuario`,`PFK_id_tipo_usuario`),
-  KEY `PFK_id_tipo_usuario_idx` (`PFK_id_tipo_usuario`),
-  CONSTRAINT `PFK_id_tipo_usuario1` FOREIGN KEY (`PFK_id_tipo_usuario`) REFERENCES `tbl_tipo_usuario` (`pk_id_tipo_usuario`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `PFK_id_usuario1` FOREIGN KEY (`PFK_id_usuario`) REFERENCES `tbl_usuario` (`pk_id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE
-) ;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tbl_usuario_tipo`
---
-
-LOCK TABLES `tbl_usuario_tipo` WRITE;
-/*!40000 ALTER TABLE `tbl_usuario_tipo` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tbl_usuario_tipo` ENABLE KEYS */;
-UNLOCK TABLES;
-/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
