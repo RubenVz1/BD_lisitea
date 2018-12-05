@@ -889,8 +889,8 @@ CREATE TABLE `tbl_planeacion` (
   `PK_id_planeacion` int(11) NOT NULL AUTO_INCREMENT,
   `FK_id_planeacion_contenedor` int(11) NOT NULL,
   `FK_id_plantel` int(11) NOT NULL,
-  `FK_datos_identificacion` int(11) NOT NULL,
-  `FK_id_intenciones_formativas` int(11) NOT NULL,
+  `FK_datos_identificacion` int(11) ,
+  `FK_id_intenciones_formativas` int(11) ,
   PRIMARY KEY (`PK_id_planeacion`),
   KEY `FK_id_planeacion_contenedor_idx` (`FK_id_planeacion_contenedor`),
   KEY `FK_id_plantel_idx` (`FK_id_plantel`),
@@ -1020,10 +1020,10 @@ DROP TABLE IF EXISTS `tbl_recursos`;
 CREATE TABLE `tbl_recursos` (
   `PK_id_recursos` int(11) NOT NULL AUTO_INCREMENT,
   `FK_id_planeacion` int(11) NOT NULL,
-  `VCH_equipo` varchar(1100) DEFAULT NULL,
-  `VCH_material` varchar(1100) DEFAULT NULL,
-  `VCH_fuentes` varchar(1500) DEFAULT NULL,
-  `TINT_nivel` tinyint(1) DEFAULT NULL,
+  `VCH_N_equipo` varchar(1100) DEFAULT NULL,
+  `VCH_N_material` varchar(1100) DEFAULT NULL,
+  `VCH_N_fuentes` varchar(1500) DEFAULT NULL,
+  `TINT_N_nivel` tinyint(1) DEFAULT NULL,
   `FK_id_espacio_fisico` int(11) NOT NULL,
   PRIMARY KEY (`PK_id_recursos`),
   KEY `FK_id_planeacion2_idx` (`FK_id_planeacion`),
@@ -1199,13 +1199,19 @@ LOCK TABLES `tbl_usuario` WRITE;
 /*!40000 ALTER TABLE `tbl_usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
-insert into tbl_tipo_usuario(VCH_nombre) values("Docente");
-insert into tbl_tipo_usuario(VCH_nombre) values("Supervisor");
-insert into tbl_tipo_usuario(VCH_nombre) values("Director");
-insert into tbl_tipo_usuario(VCH_nombre) values("Capturista");
+insert into tbl_tipo_usuario(VCH_nombre) values("Revisor");
 insert into tbl_tipo_usuario(VCH_nombre) values("Administrador");
+insert into tbl_tipo_usuario(VCH_nombre) values("Profesor");
+insert into tbl_tipo_usuario(VCH_nombre) values("Capturista");
+insert into tbl_tipo_usuario(VCH_nombre) values("Supervisor");
 
 insert into tbl_usuario values(1,"Ruben","Vazquez","Osorio","vaoh980202","pass","mail@mail.com",1);
+insert into tbl_usuario values(2,"Jose","Hernandez","Villegas","soyputo123","1234j1234","joselin@mail.com",2);
+insert into tbl_usuario values(3,"Victor","Cuevas","Lopez","victor029238123","soygay","victor@mail.com",3);
+insert into tbl_usuario values(4,"Jose Tristan","Garcilazo","Diaz","curpdetristan","soygay","tristan@mail.com",3);
+insert into tbl_usuario values(5,"Edgar","Fagardo","Rojas","curpdeedgar","soygay","fagardo@mail.com",3);
+insert into tbl_usuario values(6,"Isaac","Celis","Vargas","CELIS12ADD","micontra","celis@mail.com",4);
+insert into tbl_usuario values(7,"John","Ruiz","Reyes","John123124124","contrajohn","jonny@mail.com",5);
 
 insert into tbl_campo_disciplinar(VCH_nombre,VCH_clave) values ("MATEMATICAS","10982-S");
 insert into tbl_campo_disciplinar(VCH_nombre,VCH_clave) values ("IDIOMAS","10982-A");
@@ -1764,6 +1770,26 @@ insert into tbl_campo_competencia values(1,7);
 insert into tbl_campo_competencia values(1,8);
 insert into tbl_campo_competencia values(1,9);
 insert into tbl_campo_competencia values(1,10);
+
+insert into tbl_planeacion_contenedor values (1);
+insert into tbl_planeacion_contenedor values (2);
+insert into tbl_planeacion_contenedor values (3);
+
+insert into tbl_planeacion_usuario values (1,3,"realizo");
+insert into tbl_planeacion_usuario values (2,4,"realizo");
+insert into tbl_planeacion_usuario values (3,5,"realizo");
+
+insert into tbl_datos_identificacion values (1,"5to semestre","segundo parcial","1 de 2","planeacion para hacer menos burros a los alumnos","50");
+insert into tbl_datos_identificacion values (2,"3to semestre","tercerp parcial","1 de 2","planeacion de tercero","30");
+insert into tbl_datos_identificacion values (3,"1to semestre","primero parcial","1 de 2","planeacion de primero ","20");
+
+insert into tbl_datos_asignatura values (1,1);
+insert into tbl_datos_asignatura values (2,2);
+insert into tbl_datos_submodulo values (3,1);
+
+insert into tbl_planeacion values (1,1,0,1,0);
+insert into tbl_planeacion values (2,2,0,2,0);
+insert into tbl_planeacion values (3,2,0,3,0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
